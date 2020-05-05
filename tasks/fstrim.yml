@@ -1,0 +1,11 @@
+- name: fstrim weekly cronjob.
+  copy:
+    dest: /etc/cron.weekly/fstrim
+    content: |
+      #!/bin/sh
+      LOG=/var/log/fstrim.log
+      echo "*** $(date -R) ***" >> $LOG
+      fstrim -v / >> $LOG
+    owner: root
+    group: root
+    mode: o=rwx

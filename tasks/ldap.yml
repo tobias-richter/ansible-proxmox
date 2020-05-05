@@ -1,0 +1,32 @@
+- name: "Ensure /etc/pve/priv/ldap dir exists"
+  file:
+    path: "/etc/pve/priv/ldap"
+    state: directory
+
+- name: "Ensure password file exists."
+  file:
+    path: "/etc/pve/priv/ldap/{{ item.name }}.pw"
+    state: touch
+
+- name: "Provision bind password for {{ item.name }}."
+  copy:
+    content: "{{ item.password }}"
+    dest: "/etc/pve/priv/ldap/{{ item.name }}.pw"
+  notify:
+    - restart pveproxy
+
+- name: "Provision domain."
+  blockinfile:
+    path: /etc/pve/domains.cfg
+    marker: "\n# {mark} {{ item.name }} LDAP ANSIBLE MANAGED BLOCK"
+    block: |
+      ldap: {{ item.name }}
+              comment {{ item.name }} LDAP
+              base_dn {{ item.base_dn }}
+              server1 {{ item.server }}
+              user_attr {{ item.user_attr }}
+              default {{ item.default }}
+              secure {{ item.secure }}
+              bind_dn {{ item.bind_dn }}
+  notify:
+    - restart pveproxy

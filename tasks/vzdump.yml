@@ -1,0 +1,13 @@
+- name: ensure backup tmp dir exists
+  file:
+    path: "{{ pve_vzdump_tmpdir }}"
+    state: directory
+
+- name: Configure vzdump
+  blockinfile:
+    path: /etc/vzdump.conf
+    block: |
+      tmpdir: {{ pve_vzdump_tmpdir }}
+      mailto: {{ pve_mail_default_recipient | mandatory }}
+  notify:
+    - restart pveproxy

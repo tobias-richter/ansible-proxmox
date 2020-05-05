@@ -1,0 +1,9 @@
+- name: restart pveproxy
+  service:
+    name: "pveproxy"
+    state: restarted
+
+- name: restart postfix
+  service:
+    name: postfix
+    state: restarted

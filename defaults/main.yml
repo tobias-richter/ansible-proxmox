@@ -1,0 +1,52 @@
+pve_templates:
+  - debian-10.0-standard_10.0-1_amd64.tar.gz
+  - debian-9.0-standard_9.5-1_amd64.tar.gz
+  - centos-7-default_20171212_amd64.tar.xz
+  - ubuntu-18.04-standard_18.04-1_amd64.tar.gz
+
+pve_sysctl: []
+  #- name: kernel.shmall
+  #  value: 4194304
+  #- name: kernel.shmmax
+  #  value: 17179869184
+
+
+pve_ldap_domains: []
+  #- name: "My name"
+  #  password: "bind password"
+  #  server: "ldap.corp
+  #  bind_dn: "uid=ldapbind,ou=users,dc=ldap,dc=corp"
+  #  base_dn: "ou=users,dc=ldap,dc=corp"
+  #  user_attr: "uid"
+  #  default: 1
+  #  secure: 1
+
+pve_vzdump_tmpdir: /opt/vzdump-tmp
+
+pve_lxc_config: []
+  #- id: 111
+  #  configs:
+  #    - name: lxc.cgroup.devices.allow
+  #      value: "c 166:* rwm"
+  #    - name: lxc.mount.entry
+  #      value: "/dev/ttyACM0 dev/ttyACM0 none bind,optional,create=file 0 0"
+
+
+# example
+#  - id: 111
+#    configs:
+#      - name: lxc.cgroup.devices.allow
+#        value: "c 10:200 rwm"
+
+# pve_influxdb_port:
+# pve_influxdb_host:
+
+# pve_mail_relay_host
+# pve_mail_relay_port
+#pve_mail_relay_username:
+#pve_mail_relay_password:
+pve_mail_domain: proxmox
+# pve_mail_default_recipient: proxmox
+
+pve_dns_domain: local
+pve_nameserver: 8.8.8.8
