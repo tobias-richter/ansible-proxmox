@@ -37,11 +37,11 @@
   tags:
     - postfix
   when:
-    - pve_mail_relay_host
-    - pve_mail_relay_port
-    - pve_mail_relay_username:
-    - pve_mail_relay_password:
-    - pve_mail_default_recipient: proxmox
+    - pve_mail_relay_host is defined
+    - pve_mail_relay_port is defined
+    - pve_mail_relay_username is defined
+    - pve_mail_relay_password is defined
+    - pve_mail_default_recipient is defined
 
 - name: vzdump config.
   include_tasks: vzdump.yml
@@ -98,5 +98,5 @@
           port {{ pve_influxdb_port }}
 
   when:
-    - pve_influxdb_port
-    - pve_influxdb_host
+    - pve_influxdb_port is defined
+    - pve_influxdb_host is defined
