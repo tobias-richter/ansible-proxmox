@@ -71,7 +71,7 @@
   notify:
     - restart postfix
 
-- name: Create passwd
+- name: Create passwd # noqa 503
   command: postmap /etc/postfix/sasl/passwd
   when: __postfix_config.changed
   notify:
