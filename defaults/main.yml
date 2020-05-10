@@ -24,19 +24,25 @@ pve_ldap_domains: []
 pve_vzdump_tmpdir: /opt/vzdump-tmp
 
 pve_lxc_config: []
-  #- id: 111
-  #  configs:
-  #    - name: lxc.cgroup.devices.allow
-  #      value: "c 166:* rwm"
-  #    - name: lxc.mount.entry
-  #      value: "/dev/ttyACM0 dev/ttyACM0 none bind,optional,create=file 0 0"
-
-
-# example
 #  - id: 111
-#    configs:
+#    options:
+#      # allow tunnel creation on lxc for VPN
 #      - name: lxc.cgroup.devices.allow
 #        value: "c 10:200 rwm"
+#        state: absent
+#      - name: lxc.cap.keep
+#        value: "sys_module mknod"
+#        state: absent
+#      - name: lxc.mount.entry
+#        value: /dev/net/tun dev/net/tun none bind,create=file
+#  - id: 117
+#    options:
+#      # allow zigbee stick in container
+#      - name: lxc.cgroup.devices.allow
+#        value: "c 166:* rwm"
+#        state: present
+#      - name: lxc.mount.entry
+#        value: /dev/ttyACM0 dev/ttyACM0 none bind,optional,create=file
 
 # pve_influxdb_port:
 # pve_influxdb_host:

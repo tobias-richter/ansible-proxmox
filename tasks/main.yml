@@ -86,7 +86,7 @@
     file:
       path: /etc/pve/status.cfg
       state: touch
-
+    changed_when: false
 
   - name: Configure influxdb in status.cfg
     copy:

@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: users
+  role_name: proxmox
   author: Tobias Richter
   description: Ansible Role for managing proxmox.
   license: Apache

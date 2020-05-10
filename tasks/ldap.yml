@@ -7,6 +7,7 @@
   file:
     path: "/etc/pve/priv/ldap/{{ item.name }}.pw"
     state: touch
+  changed_when: false
 
 - name: "Provision bind password for {{ item.name }}."
   copy:
