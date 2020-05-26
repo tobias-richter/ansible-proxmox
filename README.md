@@ -1,4 +1,4 @@
-# tobias_richter.proxmox_backup
+# tobias_richter.proxmox
 
 [![Build Status](https://travis-ci.org/tobias-richter/ansible-proxmox.svg?branch=master)](https://travis-ci.org/tobias-richter/ansible-proxmox)
 
