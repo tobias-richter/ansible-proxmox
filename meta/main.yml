@@ -9,3 +9,10 @@ galaxy_info:
     - name: Debian
       versions:
         - buster
+
+  galaxy_tags:
+    - proxmox
+    - pve
+    - ldap
+    - sysctl
+    - lxc

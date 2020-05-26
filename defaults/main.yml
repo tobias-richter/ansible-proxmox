@@ -1,14 +1,16 @@
+# defines the templates to be provisioned / downloaded
 pve_templates: []
   #- debian-10.0-standard_10.0-1_amd64.tar.gz
   #- ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
 
+# define sysctl values to be configured
 pve_sysctl: []
   #- name: kernel.shmall
   #  value: 4194304
   #- name: kernel.shmmax
   #  value: 17179869184
 
-
+# configure ldap auth domains
 pve_ldap_domains: []
   #- name: "My name"
   #  password: "bind password"
@@ -19,8 +21,10 @@ pve_ldap_domains: []
   #  default: 1
   #  secure: 1
 
+# Path to the pve_vzdum_tmpdir
 pve_vzdump_tmpdir: /opt/vzdump-tmp
 
+# Custom lxc configurations. See commented lines for examples.
 pve_lxc_config: []
 #  - id: 111
 #    options:
@@ -42,17 +46,21 @@ pve_lxc_config: []
 #      - name: lxc.mount.entry
 #        value: /dev/ttyACM0 dev/ttyACM0 none bind,optional,create=file
 
+# Configure influxdb monitoring
 # pve_influxdb_port:
 # pve_influxdb_host:
 
-# pve_mail_relay_host
-# pve_mail_relay_port
-#pve_mail_relay_username:
-#pve_mail_relay_password:
+# Postfix relay configuration for sending mails with proxmox
+# pve_mail_relay_host:
+# pve_mail_relay_port:
+# pve_mail_relay_username:
+# pve_mail_relay_password:
 pve_mail_domain: proxmox
 # pve_mail_default_recipient: proxmox
 pve_mail_smtp_tls_wrappermode: "yes"
 pve_mail_smtp_use_tls: "yes"
 
+# configure dns search domain
 pve_dns_domain: local
+# configure primary mailserver (google is default)
 pve_nameserver: 8.8.8.8
