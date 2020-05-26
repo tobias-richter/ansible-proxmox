@@ -51,6 +51,8 @@ pve_lxc_config: []
 #pve_mail_relay_password:
 pve_mail_domain: proxmox
 # pve_mail_default_recipient: proxmox
+pve_mail_smtp_tls_wrappermode: "yes"
+pve_mail_smtp_use_tls: "yes"
 
 pve_dns_domain: local
 pve_nameserver: 8.8.8.8

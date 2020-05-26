@@ -10,7 +10,7 @@
       relayhost = [{{ pve_mail_relay_host }}]:{{ pve_mail_relay_port }}
 
       #  use tls
-      smtp_use_tls=yes
+      smtp_use_tls = {{ pve_mail_smtp_use_tls }}
 
       # use sasl when authenticating to foreign SMTP servers
       smtp_sasl_auth_enable = yes
@@ -23,9 +23,12 @@
 
       # eliminates default security options which are incompatible with gmail
       smtp_sasl_security_options = noanonymous
+      smtp_sasl_tls_security_options = noanonymous
+
+      header_size_limit = 4096000
 
       # needed by tls
-      smtp_tls_wrappermode = yes
+      smtp_tls_wrappermode = {{ pve_mail_smtp_tls_wrappermode }}
       smtp_tls_security_level = encrypt
 
       # rewrite sender
@@ -36,6 +39,12 @@
   register: __postfix_config
   notify:
     - restart postfix
+
+- name: Remove duplicate relayhost.
+  lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: ^relayhost\s*=\s*$
+    line: "# relayhost ="
 
 - name: Configure sender_canonical_maps
   blockinfile:
@@ -65,7 +74,7 @@
 - name: Provide relay server credentials.
   copy:
     dest: "/etc/postfix/sasl/passwd"
-    content: "[{{ mail_relay_host }}]:{{ mail_relay_port }}  {{ pve_mail_relay_username }}:{{ mail_relay_username }}"
+    content: "[{{ pve_mail_relay_host }}]:{{ pve_mail_relay_port }}  {{ pve_mail_relay_username }}:{{ pve_mail_relay_password }}"
     owner: root
     group: root
   notify:
