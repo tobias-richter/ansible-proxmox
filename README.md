@@ -98,7 +98,7 @@ Configure dns search domain.
 
     pve_nameserver: 8.8.8.8
 
-Cconfigure primary mailserver (google is default).
+Configure primary mailserver (google is default).
 
 
 ## Example Playbook
