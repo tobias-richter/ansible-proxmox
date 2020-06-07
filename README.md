@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/tobias-richter/ansible-proxmox.svg?branch=master)](https://travis-ci.org/tobias-richter/ansible-proxmox)
 
-This roles takes care of configuring some parts of the Proxmox virtual environment:
+This role takes care of configuring some parts of the Proxmox virtual environment:
 
 * lxc template download
 * sysctl configuration
