@@ -1,6 +1,6 @@
 - name: Set path facts.
   set_fact:
-    _container_config_path: "/etc/pve/nodes/pve/lxc/{{ item.id | mandatory }}.conf"
+    _container_config_path: "/etc/pve/nodes/{{ pve_node_name }}/lxc/{{ item.id | mandatory }}.conf"
     _container_config_tmp_path: "/tmp/{{ item.id | mandatory }}.conf"
 
 - name: Copy config file to tmp destination for manipulation.

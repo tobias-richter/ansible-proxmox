@@ -16,10 +16,16 @@
   notify:
     - restart pveproxy
 
-- name: "Provision domain."
+- name: "Ensure domains.cfg is present."
+  file:
+    state: touch
+    path: /etc/pve/domains.cfg
+
+- name: "Provision domains.cfg"
   blockinfile:
     path: /etc/pve/domains.cfg
     marker: "\n# {mark} {{ item.name }} LDAP ANSIBLE MANAGED BLOCK"
+    create: yes
     block: |
       ldap: {{ item.name }}
               comment {{ item.name }} LDAP

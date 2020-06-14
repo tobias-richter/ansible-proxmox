@@ -64,3 +64,6 @@ pve_mail_smtp_use_tls: "yes"
 pve_dns_domain: local
 # configure primary mailserver (google is default)
 pve_nameserver: 8.8.8.8
+
+# name of the proxmox node
+pve_node_name: pve
