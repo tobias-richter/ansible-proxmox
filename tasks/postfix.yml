@@ -51,7 +51,7 @@
     path: /etc/postfix/sender_canonical_maps
     create: yes
     block: |
-      /.+/    pve@{{ pve_mail_domain }}
+      /.+/    {{ pve_node_name }}@{{ pve_mail_domain }}
   notify:
     - restart postfix
 
