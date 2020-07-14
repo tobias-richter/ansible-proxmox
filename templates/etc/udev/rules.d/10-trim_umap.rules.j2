@@ -1,0 +1,1 @@
+ACTION=="add|change", ATTRS{idVendor}=="{{ pve_fstrim_usb_id_vendor }}", ATTRS{idProduct}=="{{ pve_fstrim_usb_id_product }}", SUBSYSTEM=="scsi_disk", ATTR{provisioning_mode}="unmap"

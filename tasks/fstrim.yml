@@ -9,3 +9,11 @@
     owner: root
     group: root
     mode: o=rwx
+
+- name: enable udev fstrim rules for usb massstorage.
+  template:
+    dest: /etc/udev/rules.d/10-trim_umap.rules
+    src: etc/udev/rules.d/10-trim_umap.rules.j2
+  when:
+    - pve_fstrim_usb_id_vendor is defined
+    - pve_fstrim_usb_id_product is defined

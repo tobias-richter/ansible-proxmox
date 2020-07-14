@@ -21,6 +21,8 @@
     cache_valid_time: 3600
     name:
       - pve-headers
+  tags:
+    - apt
 
 - name: Configure sysctl.
   sysctl:
@@ -77,6 +79,8 @@
     dest: /etc/apt/sources.list.d/backports.list
     content: |
       deb http://ftp.de.debian.org/debian buster-backports main
+  tags:
+    - apt
 
 - name: Configure resolv.conf
   copy:
@@ -86,6 +90,8 @@
       domain {{ pve_dns_domain }}
       search {{ pve_dns_domain }}
       nameserver {{ pve_nameserver }}
+  tags:
+    - resolv
 
 - block:
 
@@ -107,3 +113,6 @@
   when:
     - pve_influxdb_port is defined
     - pve_influxdb_host is defined
+
+  tags:
+    - influxdb
