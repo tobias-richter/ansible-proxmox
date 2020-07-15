@@ -60,7 +60,7 @@
     path: /etc/postfix/header_check
     create: yes
     block: |
-      /From:.*/ REPLACE From: pve@{{ pve_mail_domain }}
+      /From:.*/ REPLACE From: {{ pve_node_name }}@{{ pve_mail_domain }}
   notify:
     - restart postfix
 
