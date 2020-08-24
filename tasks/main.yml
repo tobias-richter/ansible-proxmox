@@ -41,17 +41,6 @@
   tags:
     - templates
 
-- name: Postfix setup.
-  include_tasks: postfix.yml
-  tags:
-    - postfix
-  when:
-    - pve_mail_relay_host is defined
-    - pve_mail_relay_port is defined
-    - pve_mail_relay_username is defined
-    - pve_mail_relay_password is defined
-    - pve_mail_default_recipient is defined
-
 - name: vzdump config.
   include_tasks: vzdump.yml
   tags:

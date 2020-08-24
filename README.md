@@ -81,17 +81,6 @@ Custom lxc configurations. See commented lines for examples.
 
 Configure influxdb monitoring.
 
-    # pve_mail_relay_host:
-    # pve_mail_relay_port:
-    # pve_mail_relay_username:
-    # pve_mail_relay_password:
-    pve_mail_domain: proxmox
-    # pve_mail_default_recipient: proxmox
-    pve_mail_smtp_tls_wrappermode: "yes"
-    pve_mail_smtp_use_tls: "yes"
-
-Postfix relay configuration for sending mails with proxmox.
-
     pve_dns_domain: local
 
 Configure dns search domain.
@@ -99,7 +88,6 @@ Configure dns search domain.
     pve_nameserver: 8.8.8.8
 
 Configure primary nameserver (google is default).
-
 
 ## Example Playbook
 

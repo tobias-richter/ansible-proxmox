@@ -50,16 +50,6 @@ pve_lxc_config: []
 # pve_influxdb_port:
 # pve_influxdb_host:
 
-# Postfix relay configuration for sending mails with proxmox
-# pve_mail_relay_host:
-# pve_mail_relay_port:
-# pve_mail_relay_username:
-# pve_mail_relay_password:
-pve_mail_domain: proxmox
-# pve_mail_default_recipient: proxmox
-pve_mail_smtp_tls_wrappermode: "yes"
-pve_mail_smtp_use_tls: "yes"
-
 # configure dns search domain
 pve_dns_domain: local
 # configure primary mailserver (google is default)
