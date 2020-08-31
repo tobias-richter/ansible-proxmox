@@ -55,6 +55,9 @@ pve_dns_domain: local
 # configure primary mailserver (google is default)
 pve_nameserver: 8.8.8.8
 
+# default recipient for proxmox mails (e.g. vzdump)
+# pve_mail_default_recipient:
+
 # name of the proxmox node
 pve_node_name: pve
 
