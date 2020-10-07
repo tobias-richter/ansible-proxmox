@@ -20,6 +20,7 @@
     # dirty hack to replace "=" against ":"
     option: "{{ option.name }}: {{ option.value }}"
     allow_no_value: true
+    mode: 0644
   register: _config_result
   with_items: "{{ item.options }}"
   loop_control:
