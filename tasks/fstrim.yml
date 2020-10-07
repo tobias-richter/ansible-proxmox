@@ -14,6 +14,8 @@
   template:
     dest: /etc/udev/rules.d/10-trim_umap.rules
     src: etc/udev/rules.d/10-trim_umap.rules.j2
+    mode: 644
+
   when:
     - pve_fstrim_usb_id_vendor is defined
     - pve_fstrim_usb_id_product is defined

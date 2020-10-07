@@ -7,6 +7,7 @@
   copy:
     src: "{{ _container_config_path }}"
     dest: "{{ _container_config_tmp_path }}"
+    mode: 0644
     remote_src: yes
 
 - name: Modify lxc config

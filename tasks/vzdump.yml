@@ -9,5 +9,6 @@
     block: |
       tmpdir: {{ pve_vzdump_tmpdir }}
       mailto: {{ pve_mail_default_recipient | mandatory }}
+    mode: 0644
   notify:
     - restart pveproxy

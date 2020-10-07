@@ -2,17 +2,20 @@
   file:
     path: "/etc/pve/priv/ldap"
     state: directory
+    mode: 0700
 
 - name: "Ensure password file exists."
   file:
     path: "/etc/pve/priv/ldap/{{ item.name }}.pw"
     state: touch
+    mode: 0600
   changed_when: false
 
 - name: "Provision bind password for {{ item.name }}."
   copy:
     content: "{{ item.password }}"
     dest: "/etc/pve/priv/ldap/{{ item.name }}.pw"
+    mode: 0600
   notify:
     - restart pveproxy
 
@@ -20,6 +23,7 @@
   file:
     state: touch
     path: /etc/pve/domains.cfg
+    mode: 0600
 
 - name: "Provision domains.cfg"
   blockinfile:
@@ -35,5 +39,6 @@
               default {{ item.default }}
               secure {{ item.secure }}
               bind_dn {{ item.bind_dn }}
+    mode: 0600
   notify:
     - restart pveproxy

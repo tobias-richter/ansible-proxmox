@@ -12,6 +12,7 @@
   copy:
     dest: /etc/apt/sources.list.d/pve-no-subscription.list
     content:  deb http://download.proxmox.com/debian/pve buster pve-no-subscription
+    mode: 0644
   tags:
     - apt
 
@@ -68,6 +69,7 @@
     dest: /etc/apt/sources.list.d/backports.list
     content: |
       deb http://ftp.de.debian.org/debian buster-backports main
+    mode: 0644
   tags:
     - apt
 
@@ -79,6 +81,7 @@
       domain {{ pve_dns_domain }}
       search {{ pve_dns_domain }}
       nameserver {{ pve_nameserver }}
+    mode: 0644
   tags:
     - resolv
 
@@ -88,6 +91,7 @@
     file:
       path: /etc/pve/status.cfg
       state: touch
+      mode: 0644
     changed_when: false
 
   - name: Configure influxdb in status.cfg
@@ -98,6 +102,7 @@
         influxdb:
           server {{ pve_influxdb_host }}
           port {{ pve_influxdb_port }}
+      mode: 0644
 
   when:
     - pve_influxdb_port is defined
