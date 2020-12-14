@@ -1,6 +1,6 @@
 # tobias_richter.proxmox
 
-[![Build Status](https://travis-ci.org/tobias-richter/ansible-proxmox.svg?branch=master)](https://travis-ci.org/tobias-richter/ansible-proxmox)
+[![Build Status](https://github.com/tobias-richter/ansible-proxmox/workflows/CI/badge.svg)](https://github.com/tobias-richter/ansible-proxmox/actions)
 
 This role takes care of configuring some parts of the Proxmox virtual environment:
 
