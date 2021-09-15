@@ -110,3 +110,29 @@
 
   tags:
     - influxdb
+
+- name: Enable kernel module.
+  modprobe:
+    name: "{{ kernel_module }}"
+    state: present
+  register: pve__register_module_enabled
+  until: pve__register_module_enabled is succeeded
+  retries: 10
+  delay: 10
+  failed_when: pve__register_module_enabled is failure
+  with_items: "{{ pve_kernel_modules_present }}"
+  loop_control:
+    loop_var: kernel_module
+  tags:
+    - module
+
+- name: "Enable kernel module in at boot"
+  blockinfile:
+    path: "/etc/modules-load.d/modules.conf"
+    marker: "# {mark} managed by tobias_richter.proxmox - module: {{ kernel_module }}"
+    block: "{{ kernel_module }}"
+  with_items: "{{ pve_kernel_modules_present }}"
+  loop_control:
+    loop_var: kernel_module
+  tags:
+    - module

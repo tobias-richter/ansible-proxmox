@@ -64,3 +64,6 @@ pve_node_name: pve
 # USB vendor and product id to enable fstrim udev rule for
 # pve_fstrim_usb_id_vendor:
 # pve_fstrim_usb_id_product:
+
+pve_kernel_modules_present: []
+  # - wireguard
