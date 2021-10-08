@@ -1,3 +1,4 @@
+---
 - name: "Ensure /etc/pve/priv/ldap dir exists"
   file:
     path: "/etc/pve/priv/ldap"

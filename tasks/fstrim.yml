@@ -1,3 +1,4 @@
+---
 - name: fstrim weekly cronjob.
   copy:
     dest: /etc/cron.weekly/fstrim
