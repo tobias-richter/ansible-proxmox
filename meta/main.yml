@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: proxmox
+  namespace: tobias_richter
   author: Tobias Richter
   description: Ansible Role for managing proxmox.
   license: Apache
