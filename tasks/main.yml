@@ -48,12 +48,6 @@
   tags:
     - vzdump
 
-- name: Ldap setup.
-  include_tasks: ldap.yml
-  with_items: "{{ pve_ldap_domains }}"
-  tags:
-    - ldap
-
 - name: fstrim.
   include_tasks: fstrim.yml
   tags:
