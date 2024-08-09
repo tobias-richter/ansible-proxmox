@@ -65,7 +65,7 @@
   copy:
     dest: /etc/apt/sources.list.d/backports.list
     content: |
-      deb http://ftp.de.debian.org/debian buster-backports main
+      deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main
     mode: 0644
   tags:
     - apt
