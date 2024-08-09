@@ -13,7 +13,7 @@
 - name: Create no subscription update list.
   copy:
     dest: /etc/apt/sources.list.d/pve-no-subscription.list
-    content: deb http://download.proxmox.com/debian/pve buster pve-no-subscription
+    content: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
     mode: 0644
   tags:
     - apt
