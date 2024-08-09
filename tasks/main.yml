@@ -1,5 +1,5 @@
 ---
-- name: Remove enterprise subscription list.
+- name: Remove enterprise subscription lists.
   file:
     path: "/etc/apt/sources.list.d/{{ item }}"
     state: absent
