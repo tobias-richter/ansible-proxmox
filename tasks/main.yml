@@ -69,6 +69,7 @@
     mode: 0644
   tags:
     - apt
+  when: pve_enable_backports
 
 - name: Configure resolv.conf
   copy:
