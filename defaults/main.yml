@@ -57,3 +57,9 @@ pve_node_name: pve
 
 pve_kernel_modules_present: []
 #  - wireguard
+
+# Controls if header files are getting installed
+pve_install_pve_headers: false
+
+# Controls wether backports repository is getting added or not
+pve_enable_backports: false
