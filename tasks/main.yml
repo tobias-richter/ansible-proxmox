@@ -14,13 +14,13 @@
   ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/pve-no-subscription.list
     content: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
-    mode: 0644
+    mode: "0644"
   tags:
     - apt
 
 - name: Install pve-headers.
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
     name:
       - pve-headers
@@ -29,7 +29,7 @@
   when: pve_install_pve_headers
 
 - name: Configure sysctl.
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: "{{ item.state | default('present') }}"
@@ -45,33 +45,33 @@
   tags:
     - templates
 
-- name: vzdump config.
-  include_tasks: vzdump.yml
+- name: Configure vzdump.
+  ansible.builtin.include_tasks: vzdump.yml
   tags:
     - vzdump
 
-- name: fstrim.
-  include_tasks: fstrim.yml
+- name: Configure fstrim.
+  ansible.builtin.include_tasks: fstrim.yml
   tags:
     - fstrim
 
-- name: lxc config.
-  include_tasks: lxc_config.yml
+- name: Configure lxc.
+  ansible.builtin.include_tasks: lxc_config.yml
   tags:
     - lxc_config
   with_items: "{{ pve_lxc_config }}"
 
-- name: Enable backports
+- name: Enable backports.
   ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/backports.list
     content: |
       deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main
-    mode: 0644
+    mode: "0644"
   tags:
     - apt
   when: pve_enable_backports
 
-- name: Configure resolv.conf
+- name: Configure resolv.conf.
   ansible.builtin.copy:
     dest: /etc/resolv.conf
     content: |
@@ -79,17 +79,23 @@
       domain {{ pve_dns_domain }}
       search {{ pve_dns_domain }}
       nameserver {{ pve_nameserver }}
-    mode: 0644
+    mode: "0644"
   tags:
     - resolv
 
-- block:
+- name: Configure influxdb.
+  when:
+    - pve_influxdb_port is defined
+    - pve_influxdb_host is defined
+  tags:
+    - influxdb
+  block:
 
-    - name: touch influxdb status.cfg first.
+    - name: Touch influxdb status.cfg first.
       ansible.builtin.file:
         path: /etc/pve/status.cfg
         state: touch
-        mode: 0644
+        mode: "0644"
       changed_when: false
 
     - name: Configure influxdb in status.cfg
@@ -100,17 +106,10 @@
           influxdb:
             server {{ pve_influxdb_host }}
             port {{ pve_influxdb_port }}
-        mode: 0644
-
-  when:
-    - pve_influxdb_port is defined
-    - pve_influxdb_host is defined
-
-  tags:
-    - influxdb
+        mode: "0644"
 
 - name: Enable kernel module.
-  ansible.builtin.modprobe:
+  community.general.modprobe:
     name: "{{ kernel_module }}"
     state: present
   register: pve__register_module_enabled

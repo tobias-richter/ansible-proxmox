@@ -1,16 +1,16 @@
 ---
-- name: ensure backup tmp dir exists
+- name: Ensure backup tmp dir exists.
   ansible.builtin.file:
     path: "{{ pve_vzdump_tmpdir }}"
     state: directory
-    mode: 0755
+    mode: "0755"
 
-- name: Configure vzdump
+- name: Configure vzdump.
   ansible.builtin.blockinfile:
     path: /etc/vzdump.conf
     block: |
       tmpdir: {{ pve_vzdump_tmpdir }}
       mailto: {{ pve_mail_default_recipient | mandatory }}
-    mode: 0644
+    mode: "0644"
   notify:
     - restart pveproxy
