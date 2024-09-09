@@ -38,9 +38,6 @@ jobs:
       - name: Create ansible.cfg
         run: "printf '[defaults]\nroles_path=./tests/requirements/:../' > ansible.cfg"
 
-      - name: ansible-lint
-        uses:  ansible/ansible-lint@v24.7.0
-
       - name: ansible-playbook syntax check
         uses: dawidd6/action-ansible-playbook@61ed42d89cb3f2582d37d71ee7e9e61f52e877ec
         with:
@@ -48,4 +45,8 @@ jobs:
           directory: "."
           requirements: tests/requirements.yml
           options: --syntax-check -i tests/inventory
+
+      - name: ansible-lint
+        uses:  ansible/ansible-lint@v24.7.0
+
 
