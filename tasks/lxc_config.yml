@@ -18,42 +18,42 @@
   register: config_file_result
 
 # only manipulate when lxc container exists on target machine
-- block:
+- name: Config lxc container.
+  block:
+    - name: Copy config file to tmp destination for manipulation.
+      ansible.builtin.copy:
+        src: "{{ _container_config_path }}"
+        dest: "{{ _container_config_tmp_path }}"
+        mode: 0644
+        remote_src: yes
 
-  - name: Copy config file to tmp destination for manipulation.
-    ansible.builtin.copy:
-      src: "{{ _container_config_path }}"
-      dest: "{{ _container_config_tmp_path }}"
-      mode: 0644
-      remote_src: yes
+    - name: Modify lxc config
+      ansible.builtin.ini_file:
+        path: "{{ _container_config_tmp_path }}"
+        owner: root
+        group: root
+        section: "{{ option.section | default('') }}"
+        state: "{{ option.state | default('present') }}"
+        # dirty hack to replace "=" against ":"
+        option: "{{ option.name }}: {{ option.value }}"
+        allow_no_value: true
+        mode: 0644
+      register: _config_result
+      with_items: "{{ item.options }}"
+      loop_control:
+        loop_var: option
 
-  - name: Modify lxc config
-    ansible.builtin.ini_file:
-      path: "{{ _container_config_tmp_path }}"
-      owner: root
-      group: root
-      section: "{{ option.section | default('') }}"
-      state: "{{ option.state | default('present') }}"
-      # dirty hack to replace "=" against ":"
-      option: "{{ option.name }}: {{ option.value }}"
-      allow_no_value: true
-      mode: 0644
-    register: _config_result
-    with_items: "{{ item.options }}"
-    loop_control:
-      loop_var: option
+    - name: Copy config file into place.  # noqa 503
+      ansible.builtin.command: "cp '{{ _container_config_tmp_path }}' '{{ _container_config_path }}'"
+      when: _config_result.changed
 
-  - name: Copy config file into place.  # noqa 503
-    ansible.builtin.command: "cp '{{ _container_config_tmp_path }}' '{{ _container_config_path }}'"
-    when: _config_result.changed
-
-  - name: Restart container
-    block:
-      - name: Shutdown container.
-        ansible.builtin.command: "pct shutdown {{ item.id }}"
-        changed_when: true
-      - name: Start container.
-        ansible.builtin.command: "pct start {{ item.id }}"
-        changed_when: true
-    when: _config_result.changed
+    - name: Restart container
+      block:
+        - name: Shutdown container.
+          ansible.builtin.command: "pct shutdown {{ item.id }}"
+          changed_when: true
+        - name: Start container.
+          ansible.builtin.command: "pct start {{ item.id }}"
+          changed_when: true
+      when: _config_result.changed
   when: config_file_result.stat.exists
