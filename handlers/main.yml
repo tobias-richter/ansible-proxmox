@@ -1,10 +1,10 @@
 ---
 - name: restart pveproxy
-  service:
+  ansible.builtin.service:
     name: "pveproxy"
     state: restarted
 
 - name: restart postfix
-  service:
+  ansible.builtin.service:
     name: postfix
     state: restarted

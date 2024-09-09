@@ -1,6 +1,6 @@
 ---
 - name: Remove enterprise subscription lists.
-  file:
+  ansible.builtin.file:
     path: "/etc/apt/sources.list.d/{{ item }}"
     state: absent
   with_items:
@@ -11,7 +11,7 @@
     - apt
 
 - name: Create no subscription update list.
-  copy:
+  ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/pve-no-subscription.list
     content: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
     mode: 0644
@@ -19,7 +19,7 @@
     - apt
 
 - name: Install pve-headers.
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 3600
     name:
@@ -29,7 +29,7 @@
   when: pve_install_pve_headers
 
 - name: Configure sysctl.
-  sysctl:
+  ansible.builtin.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: "{{ item.state | default('present') }}"
@@ -38,7 +38,7 @@
     - sysctl
 
 - name: Download templates.
-  command: "pveam download local {{ item }}"
+  ansible.builtin.command: "pveam download local {{ item }}"
   args:
     creates: /var/lib/vz/template/cache/{{ item }}
   with_items: "{{ pve_templates }}"
@@ -62,7 +62,7 @@
   with_items: "{{ pve_lxc_config }}"
 
 - name: Enable backports
-  copy:
+  ansible.builtin.copy:
     dest: /etc/apt/sources.list.d/backports.list
     content: |
       deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main
@@ -72,7 +72,7 @@
   when: pve_enable_backports
 
 - name: Configure resolv.conf
-  copy:
+  ansible.builtin.copy:
     dest: /etc/resolv.conf
     content: |
       # managed by Ansible tobias_richter.proxmox role
@@ -86,14 +86,14 @@
 - block:
 
     - name: touch influxdb status.cfg first.
-      file:
+      ansible.builtin.file:
         path: /etc/pve/status.cfg
         state: touch
         mode: 0644
       changed_when: false
 
     - name: Configure influxdb in status.cfg
-      copy:
+      ansible.builtin.copy:
         dest: /etc/pve/status.cfg
         content: |
           # managed by Ansible tobias_richter.proxmox role
@@ -110,7 +110,7 @@
     - influxdb
 
 - name: Enable kernel module.
-  modprobe:
+  ansible.builtin.modprobe:
     name: "{{ kernel_module }}"
     state: present
   register: pve__register_module_enabled
@@ -125,7 +125,7 @@
     - module
 
 - name: "Enable kernel module in at boot"
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "/etc/modules-load.d/modules.conf"
     marker: "# {mark} managed by tobias_richter.proxmox - module: {{ kernel_module }}"
     block: "{{ kernel_module }}"

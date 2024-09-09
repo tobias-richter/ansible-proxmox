@@ -1,12 +1,12 @@
 ---
 - name: ensure backup tmp dir exists
-  file:
+  ansible.builtin.file:
     path: "{{ pve_vzdump_tmpdir }}"
     state: directory
     mode: 0755
 
 - name: Configure vzdump
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/vzdump.conf
     block: |
       tmpdir: {{ pve_vzdump_tmpdir }}
