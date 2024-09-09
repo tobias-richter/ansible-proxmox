@@ -11,18 +11,7 @@ pve_sysctl: []
 #  - name: kernel.shmmax
 #    value: 17179869184
 
-# configure ldap auth domains
-pve_ldap_domains: []
-#  - name: "My name"
-#    password: "bind password"
-#    server: "ldap.corp
-#    bind_dn: "uid=ldapbind,ou=users,dc=ldap,dc=corp"
-#    base_dn: "ou=users,dc=ldap,dc=corp"
-#    user_attr: "uid"
-#    default: 1
-#    secure: 1
-
-# Path to the pve_vzdum_tmpdir
+# Path to the pve_vzdump_tmpdir
 pve_vzdump_tmpdir: /opt/vzdump-tmp
 
 # Custom lxc configurations. See commented lines for examples.
@@ -68,3 +57,9 @@ pve_node_name: pve
 
 pve_kernel_modules_present: []
 #  - wireguard
+
+# Controls if header files are getting installed
+pve_install_pve_headers: false
+
+# Controls wether backports repository is getting added or not
+pve_enable_backports: false

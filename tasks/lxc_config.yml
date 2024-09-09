@@ -1,40 +1,59 @@
 ---
 - name: Set path facts.
-  set_fact:
+  ansible.builtin.set_fact:
     _container_config_path: "/etc/pve/nodes/{{ pve_node_name }}/lxc/{{ item.id | mandatory }}.conf"
     _container_config_tmp_path: "/tmp/{{ item.id | mandatory }}.conf"
 
-- name: Copy config file to tmp destination for manipulation.
-  copy:
-    src: "{{ _container_config_path }}"
-    dest: "{{ _container_config_tmp_path }}"
-    mode: 0644
-    remote_src: yes
+- name: Debut output
+  ansible.builtin.debug:
+    msg:
+      - "pve_node_name: {{ pve_node_name }}"
+      - "_container_config_path: {{ _container_config_path }}"
+      - "_container_config_tmp_path: {{ _container_config_tmp_path }}"
+    verbosity: 1
 
-- name: Modify lxc config
-  ini_file:
-    path: "{{ _container_config_tmp_path }}"
-    owner: root
-    group: root
-    section: "{{ option.section | default('') }}"
-    state: "{{ option.state | default('present') }}"
-    # dirty hack to replace "=" against ":"
-    option: "{{ option.name }}: {{ option.value }}"
-    allow_no_value: true
-    mode: 0644
-  register: _config_result
-  with_items: "{{ item.options }}"
-  loop_control:
-    loop_var: option
+- name: Check if lxc is present on machine
+  ansible.builtin.stat:
+    path: "{{ _container_config_path }}"
+  register: config_file_result
 
-- name: Copy config file into place.  # noqa 503
-  command: "cp '{{ _container_config_tmp_path }}' '{{ _container_config_path }}'"
-  when: _config_result.changed
-
-- name: Restart container
+# only manipulate when lxc container exists on target machine
+- name: Config lxc container.
+  when: config_file_result.stat.exists
   block:
-    - name: Shutdown container.
-      command: "pct shutdown {{ item.id }}"
-    - name: Start container.
-      command: "pct start {{ item.id }}"
-  when: _config_result.changed
+    - name: Copy config file to tmp destination for manipulation.
+      ansible.builtin.copy:
+        src: "{{ _container_config_path }}"
+        dest: "{{ _container_config_tmp_path }}"
+        mode: "0644"
+        remote_src: true
+
+    - name: Modify lxc config
+      community.general.ini_file:
+        path: "{{ _container_config_tmp_path }}"
+        owner: root
+        group: root
+        section: "{{ option.section | default('') }}"
+        state: "{{ option.state | default('present') }}"
+        # dirty hack to replace "=" against ":"
+        option: "{{ option.name }}: {{ option.value }}"
+        allow_no_value: true
+        mode: "0644"
+      register: _config_result
+      with_items: "{{ item.options }}"
+      loop_control:
+        loop_var: option
+
+    - name: Copy config file into place.  # noqa no-handler no-changed-when
+      ansible.builtin.command: "cp '{{ _container_config_tmp_path }}' '{{ _container_config_path }}'"
+      when: _config_result.changed
+
+    - name: Restart container # noqa no-handler
+      when: _config_result.changed
+      block:
+        - name: Shutdown container.
+          ansible.builtin.command: "pct shutdown {{ item.id }}"
+          changed_when: true
+        - name: Start container.
+          ansible.builtin.command: "pct start {{ item.id }}"
+          changed_when: true
