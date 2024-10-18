@@ -78,7 +78,13 @@
       # managed by Ansible tobias_richter.proxmox role
       domain {{ pve_dns_domain }}
       search {{ pve_dns_domain }}
-      nameserver {{ pve_nameserver }}
+      {% if pve_nameserver | type_debug == 'list' %}
+        {%- for nameserver in pve_nameserver -%}nameserver {{ nameserver }}
+      {% endfor %}
+      {% else %}
+      nameserver {{ pve_nameserver }}      
+      {% endif %}
+
     mode: "0644"
   tags:
     - resolv

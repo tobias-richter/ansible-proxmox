@@ -43,7 +43,8 @@ pve_lxc_config: []
 # configure dns search domain
 pve_dns_domain: local
 # configure primary mailserver (google is default)
-pve_nameserver: 8.8.8.8
+pve_nameserver:
+  - 8.8.8.8
 
 # default recipient for proxmox mails (e.g. vzdump)
 # pve_mail_default_recipient:
