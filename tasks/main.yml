@@ -28,8 +28,18 @@
     - apt
   when: pve_install_pve_headers
 
+- name: Remove sysctl config from deprecated config location.
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: "absent"
+  with_items: "{{ pve_sysctl }}"
+  tags:
+    - sysctl
+
 - name: Configure sysctl.
   ansible.posix.sysctl:
+    sysctl_file: "/etc/sysctl.d/01-proxmox.conf"
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: "{{ item.state | default('present') }}"
