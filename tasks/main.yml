@@ -92,7 +92,7 @@
         {%- for nameserver in pve_nameserver -%}nameserver {{ nameserver }}
       {% endfor %}
       {% else %}
-      nameserver {{ pve_nameserver }}      
+      nameserver {{ pve_nameserver }}
       {% endif %}
 
     mode: "0644"
