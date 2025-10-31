@@ -89,7 +89,7 @@
       domain {{ pve_dns_domain }}
       search {{ pve_dns_domain }}
       {% if pve_nameserver | type_debug == 'list' %}
-        {%- for nameserver in pve_nameserver -%}nameserver {{ nameserver }}
+      {%- for nameserver in pve_nameserver -%}nameserver {{ nameserver }}
       {% endfor %}
       {% else %}
       nameserver {{ pve_nameserver }}
