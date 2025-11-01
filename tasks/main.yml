@@ -6,6 +6,7 @@
   with_items:
     - pve-enterprise.list.dpkg-dist
     - pve-enterprise.list
+    - pve-enterprise.source
     - ceph.list
   tags:
     - apt
