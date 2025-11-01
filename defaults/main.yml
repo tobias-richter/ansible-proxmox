@@ -64,3 +64,5 @@ pve_install_pve_headers: false
 
 # Controls wether backports repository is getting added or not
 pve_enable_backports: false
+
+pve_create_no_subscription_update_list: true

@@ -18,6 +18,7 @@
     mode: "0644"
   tags:
     - apt
+  when: pve_create_no_subscription_update_list
 
 - name: Install pve-headers.
   ansible.builtin.apt:
